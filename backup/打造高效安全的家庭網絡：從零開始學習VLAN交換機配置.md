@@ -53,10 +53,11 @@ VLAN 提供了以下幾個主要優勢：
     3. 伺服器架設：設置簡單伺服器，用於家庭和公司應用。
     4. 安全的遠程訪問：設置VPN，確保遠程訪問的安全性，避免使用不安全的Port Forwarding。
     5. 網絡隔離：通過VLAN劃分不同的網絡區域，提升安全性和管理靈活性。
-## 網路結構
-    因為要實現虛擬網路(VLAN)的互通，所以我們選擇用802.1Q的協定完成。(除了交換機設定 、軟路由也要設定VLAN資訊讓軟路由能夠解析資料)
-    
-![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/16d098c4-465a-473c-863d-2263502ae13b)
+## VLAN拓樸結構圖/實際VLAN部署接線圖
+我們要實現是下面這種拓樸結構，透過802.1Q協定讓交換機幫我們在幫我們實現。    
+![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/67a8743f-b5a7-4bc6-8f43-6ff8ba6b1695)
+實際部署的考量(包含軟體)
+![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/e956ba5a-a14b-4568-8301-18c203b1aee4)
 
 ## 交換機設定
 ### 虛擬網路
