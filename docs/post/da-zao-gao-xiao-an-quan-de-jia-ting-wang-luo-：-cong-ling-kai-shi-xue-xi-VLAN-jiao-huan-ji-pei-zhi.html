@@ -112,6 +112,28 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </li>
 </ul>
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/ced3b540-9263-442d-8819-7383702b88d2"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/ced3b540-9263-442d-8819-7383702b88d2" alt="image" style="max-width: 100%;"></a></p>
+<h2>802.1Q 知識</h2>
+<h3>PVID &amp; VLAN ID</h3>
+<ol>
+<li>PVID（Port VLAN ID）：交換機端口的默認 VLAN ID，用於標記未標籤封包進入交換機時應該屬於哪個 VLAN。</li>
+<li>VLAN ID：封包的標識，用於區分不同的 VLAN。</li>
+</ol>
+<h3>Trunk 口 (Tagged)</h3>
+<ol>
+<li>定義：Trunk 口用於在交換機之間傳輸多個 VLAN 的數據。Trunk 口會為每個封包添加一個 802.1Q 標籤，以標識其所屬的 VLAN。這個口傳輸、接收都是"有加過標籤"。</li>
+<li>應用：用於連接多個交換機或連接到支持多個 VLAN 的路由器、軟路由。</li>
+</ol>
+<h3>Access 口  (untagged )</h3>
+<ol>
+<li>定義：Access 口用於連接終端設備（如電腦或打印機）。每個 Access 口只能屬於一個 VLAN，不會對封包添加 802.1Q 標籤。這些設備只能傳送、接收"未加標籤"的封包。</li>
+<li>應用：用於連接單個設備到交換機。</li>
+</ol>
+<h3>整合知識:</h3>
+<ol>
+<li>VLAN 1 是預設虛擬網路：包含所有端口，所有端口都被設定成 Untagged。例如，如果 Port 1 的 PVID 設定成 1，它可以把 Port 1 的封包傳送給其他 1-8 的端口。通常會用於默認配置。通常Trunk 口都會PVID 設定成1。</li>
+<li>Tagged (Trunk) 口的應用：在每個虛擬網路中，如果要互相連接，Tagged (Trunk) 口通常用於連接到軟路由或路由器的接口。只有被設定成 Tagged 的接口才能從軟體設定中提取出正確的 VLAN ID。如果在交換機網路將軟路由接口設定了Untagged，即使軟體配置正確，因為接口是 Untagged 的，所以 VLAN ID 不會被加到傳送給軟路由的封包中，自然也無法解析出其他網路傳送的VLAN ID 進而管控流量了。</li>
+<li>Untagged 口應用：在虛擬網路中，如果設備需要互相連接，可以把這些端口設定成 Untagged，這樣相同的 Untagged 端口可以直接互相傳送資料（類似於區域網路的概念）。通常，我們將 Untagged 端口的 PVID 設定成該虛擬網路的 VLAN ID，這意味著該接口會默認將封包傳送到該虛擬網路內。</li>
+</ol>
 <h1>範例1: 多個租戶共用同個網路</h1>
 <p>MTU VLAN配置，其中交換機的Uplink端口（Port 1）連接到ISP的路由器，而其他端口分別連接到不同的租客路由器（租客A和租客B）。這種配置確保了租客間的數據隔離，同時每個租客都可以訪問ISP提供的網際網路服務。<br>
 網路結構<br>
@@ -163,29 +185,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h3>PVID 設定</h3>
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/97db2925-4c86-467c-8235-ee46ff5f5f55"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/97db2925-4c86-467c-8235-ee46ff5f5f55" alt="image" style="max-width: 100%;"></a></p>
 <h2>數據流與安全性</h2>
-<p>在這個配置中，可以通過軟路由靈活設定防火牆，在達到隔離效果的同時又能兼顧靈活性，打開部分通道讓家庭網路可以直接訪問伺服器網路。可以避免伺服器網路被入侵時其他設備遭殃。</p>
-<h2>802.1Q 知識</h2>
-<h3>PVID &amp; VLAN ID</h3>
-<ol>
-<li>PVID（Port VLAN ID）：交換機端口的默認 VLAN ID，用於標記未標籤封包進入交換機時應該屬於哪個 VLAN。</li>
-<li>VLAN ID：封包的標識，用於區分不同的 VLAN。</li>
-</ol>
-<h3>Trunk 口 (Tagged)</h3>
-<ol>
-<li>定義：Trunk 口用於在交換機之間傳輸多個 VLAN 的數據。Trunk 口會為每個封包添加一個 802.1Q 標籤，以標識其所屬的 VLAN。這個口傳輸、接收都是"有加過標籤"。</li>
-<li>應用：用於連接多個交換機或連接到支持多個 VLAN 的路由器、軟路由。</li>
-</ol>
-<h3>Access 口  (untagged )</h3>
-<ol>
-<li>定義：Access 口用於連接終端設備（如電腦或打印機）。每個 Access 口只能屬於一個 VLAN，不會對封包添加 802.1Q 標籤。這些設備只能傳送、接收"未加標籤"的封包。</li>
-<li>應用：用於連接單個設備到交換機。</li>
-</ol>
-<h3>整合知識:</h3>
-<ol>
-<li>VLAN 1 是預設虛擬網路：包含所有端口，所有端口都被設定成 Untagged。例如，如果 Port 1 的 PVID 設定成 1，它可以把 Port 1 的封包傳送給其他 1-8 的端口。通常會用於默認配置。通常Trunk 口都會PVID 設定成1。</li>
-<li>Tagged (Trunk) 口的應用：在每個虛擬網路中，如果要互相連接，Tagged (Trunk) 口通常用於連接到軟路由或路由器的接口。只有被設定成 Tagged 的接口才能從軟體設定中提取出正確的 VLAN ID。如果在交換機網路將軟路由接口設定了Untagged，即使軟體配置正確，因為接口是 Untagged 的，所以 VLAN ID 不會被加到傳送給軟路由的封包中，自然也無法解析出其他網路傳送的VLAN ID 進而管控流量了。</li>
-<li>Untagged 口應用：在虛擬網路中，如果設備需要互相連接，可以把這些端口設定成 Untagged，這樣相同的 Untagged 端口可以直接互相傳送資料（類似於區域網路的概念）。通常，我們將 Untagged 端口的 PVID 設定成該虛擬網路的 VLAN ID，這意味著該接口會默認將封包傳送到該虛擬網路內。</li>
-</ol></div>
+<p>在這個配置中，可以通過軟路由靈活設定防火牆，在達到隔離效果的同時又能兼顧靈活性，打開部分通道讓家庭網路可以直接訪問伺服器網路。可以避免伺服器網路被入侵時其他設備遭殃。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
