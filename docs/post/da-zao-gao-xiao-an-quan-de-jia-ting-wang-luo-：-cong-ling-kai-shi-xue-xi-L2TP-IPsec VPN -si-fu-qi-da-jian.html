@@ -11,11 +11,11 @@
     </script>
 <meta name="description" content="# 前置作業
 1. 設定好pfSense的網絡設置，並確定可以網路連線
-  - 確保你的pfSense已安裝並基本配置完畢，包括WAN和LAN接口的設置。">
+    - 確保你的pfSense已安裝並基本配置完畢，包括WAN和LAN接口的設置。">
 <meta property="og:title" content="打造高效安全的家庭網絡：從零開始學習L2TP/IPsec VPN 伺服器搭建">
 <meta property="og:description" content="# 前置作業
 1. 設定好pfSense的網絡設置，並確定可以網路連線
-  - 確保你的pfSense已安裝並基本配置完畢，包括WAN和LAN接口的設置。">
+    - 確保你的pfSense已安裝並基本配置完畢，包括WAN和LAN接口的設置。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hhjjy.github.io/post/da-zao-gao-xiao-an-quan-de-jia-ting-wang-luo-%EF%BC%9A-cong-ling-kai-shi-xue-xi-L2TP-IPsec%20VPN%20-si-fu-qi-da-jian.html">
 <meta property="og:image" content="https://raw.githubusercontent.com/hhjjy/hhjjy.github.io/master/DJI_20240116_112316_459.JPG">
@@ -76,18 +76,18 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>前置作業</h1>
 <ol>
-<li>設定好pfSense的網絡設置，並確定可以網路連線</li>
-</ol>
+<li>設定好pfSense的網絡設置，並確定可以網路連線
 <ul>
 <li>確保你的pfSense已安裝並基本配置完畢，包括WAN和LAN接口的設置。確認WAN接口可以正常連接到互聯網，並且LAN接口可以與內網設備正常通信。</li>
 </ul>
-<ol start="2">
-<li>確定ISP提供的是公網IP而不是ISP大內網</li>
-</ol>
+</li>
+<li>確定ISP提供的是公網IP而不是ISP大內網
 <ul>
 <li>檢查你的WAN接口是否獲得了公網IP地址。可以通過pfSense的狀態頁面（Status &gt; Interfaces）查看WAN接口的IP地址，並使用線上工具（如WhatIsMyIP）驗證該IP是否為公網IP。</li>
 <li>如果你的IP地址屬於私有IP地址範圍（例如10.x.x.x、172.16.x.x-172.31.x.x、192.168.x.x），則可能是ISP提供的是NAT網絡，需要與ISP聯繫以獲取公網IP。</li>
 </ul>
+</li>
+</ol>
 <h1>VPN設定</h1>
 <h2>IPsec 設定</h2>
 <ol>
@@ -116,7 +116,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>創建一個用戶</li>
 </ol>
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/30a7e911-1557-41fd-ad5e-cfe291659d71"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/30a7e911-1557-41fd-ad5e-cfe291659d71" alt="image" style="max-width: 100%;"></a></p>
-<ol start="3">
+<h2>配置防火牆</h2>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/2f86ec96-878d-4a58-a6fc-8b1b7e885e72"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/2f86ec96-878d-4a58-a6fc-8b1b7e885e72" alt="image" style="max-width: 100%;"></a></p>
+<h2>測試</h2>
+<ol>
 <li>
 <p>測試<br>
 <a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/ce77142a-4f45-4644-a543-79e8d141e7de"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/ce77142a-4f45-4644-a543-79e8d141e7de" alt="image" style="max-width: 100%;"></a></p>
