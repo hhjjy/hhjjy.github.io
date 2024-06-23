@@ -78,8 +78,19 @@ VLAN 提供了以下幾個主要優勢：
 
 ## 交換機設定
 ### 虛擬網路
+在設定那些網路在同個網路ID時，大概有一個準則可以參考。網路口不能被設定的設定成Untagged。例如電腦、電視。你希望插上去就要可以用。希望有多個網路可以經過的口要設定成Tagged，因為要處理來自其他端口的資料需要"已標記"的封包才能判斷是從哪來要往哪邊發。
+下面的VLAN10 舉例
+- Port 1 ISP => 希望可以直通到Port 3 (untagged )
+- Port 2 軟路由 => 需要匯集來自Port 1 , 3 的資料 (Tagged) 
+- Port 3 Deco Mesh WIFI => 希望可以直通到Port 1 (Untagged)
 ![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/231e1fc4-ed55-402f-ad7b-8abe690e4550)
 ### PVID 設定
+> [!NOTE]
+> 對於需要處理多個端口數據的軟路由，PVID要設定成1，原因是軟路由要能夠訪問所有端口，PVID為1 默認所有端口都在VLAN1 內 為 untagged 。
+
+> [!NOTE]
+> 對於不須加標籤的端口，PVID 通常都是設定成該網路的ID，原因是該端口發的封包要默認傳給該虛擬網路。例如VLAN10 的Port 3，PVID = 10，原因是他的網路設計時屬於VLAN10，這樣Port 2 在解析來自Port 3 封包才會認出他屬於VLAN10中。
+
 ![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/97db2925-4c86-467c-8235-ee46ff5f5f55)
 ## 數據流與安全性
 在這個配置中，可以通過軟路由靈活設定防火牆，在達到隔離效果的同時又能兼顧靈活性，打開部分通道讓家庭網路可以直接訪問伺服器網路。可以避免伺服器網路被入侵時其他設備遭殃。

@@ -42,7 +42,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     .postTitle{font-size:24px;}
 }
 </style>
-
+<style>.markdown-alert{padding:0.5rem 1rem;margin-bottom:1rem;border-left:.25em solid var(--borderColor-default,var(--color-border-default));}.markdown-alert .markdown-alert-title {display:flex;font-weight:var(--base-text-weight-medium,500);align-items:center;line-height:1;}.markdown-alert>:first-child {margin-top:0;}.markdown-alert>:last-child {margin-bottom:0;}</style><style>.markdown-alert.markdown-alert-note {border-left-color:var(--borderColor-accent-emphasis, var(--color-accent-emphasis));background-color:var(--color-accent-subtle);}.markdown-alert.markdown-alert-note .markdown-alert-title {color: var(--fgColor-accent,var(--color-accent-fg));}</style>
 
 
 
@@ -182,8 +182,19 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/e956ba5a-a14b-4568-8301-18c203b1aee4"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/e956ba5a-a14b-4568-8301-18c203b1aee4" alt="image" style="max-width: 100%;"></a></p>
 <h2>交換機設定</h2>
 <h3>虛擬網路</h3>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/231e1fc4-ed55-402f-ad7b-8abe690e4550"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/231e1fc4-ed55-402f-ad7b-8abe690e4550" alt="image" style="max-width: 100%;"></a></p>
+<p>在設定那些網路在同個網路ID時，大概有一個準則可以參考。網路口不能被設定的設定成Untagged。例如電腦、電視。你希望插上去就要可以用。希望有多個網路可以經過的口要設定成Tagged，因為要處理來自其他端口的資料需要"已標記"的封包才能判斷是從哪來要往哪邊發。<br>
+下面的VLAN10 舉例</p>
+<ul>
+<li>Port 1 ISP =&gt; 希望可以直通到Port 3 (untagged )</li>
+<li>Port 2 軟路由 =&gt; 需要匯集來自Port 1 , 3 的資料 (Tagged)</li>
+<li>Port 3 Deco Mesh WIFI =&gt; 希望可以直通到Port 1 (Untagged)<br>
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/231e1fc4-ed55-402f-ad7b-8abe690e4550"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/231e1fc4-ed55-402f-ad7b-8abe690e4550" alt="image" style="max-width: 100%;"></a></li>
+</ul>
 <h3>PVID 設定</h3>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>對於需要處理多個端口數據的軟路由，PVID要設定成1，原因是軟路由要能夠訪問所有端口，PVID為1 默認所有端口都在VLAN1 內 為 untagged 。</p>
+</div>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>對於不須加標籤的端口，PVID 通常都是設定成該網路的ID，原因是該端口發的封包要默認傳給該虛擬網路。例如VLAN10 的Port 3，PVID = 10，原因是他的網路設計時屬於VLAN10，這樣Port 2 在解析來自Port 3 封包才會認出他屬於VLAN10中。</p>
+</div>
 <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/97db2925-4c86-467c-8235-ee46ff5f5f55"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/97db2925-4c86-467c-8235-ee46ff5f5f55" alt="image" style="max-width: 100%;"></a></p>
 <h2>數據流與安全性</h2>
 <p>在這個配置中，可以通過軟路由靈活設定防火牆，在達到隔離效果的同時又能兼顧靈活性，打開部分通道讓家庭網路可以直接訪問伺服器網路。可以避免伺服器網路被入侵時其他設備遭殃。</p></div>
