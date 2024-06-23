@@ -80,9 +80,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <li>安全性：不同的 VLAN 之間彼此隔離，可以防止未經授權的訪問和數據泄露。</li>
 <li>性能：通過劃分 VLAN，可以減少廣播域的範圍，從而減少廣播風暴對整體網絡性能的影響。</li>
 <li>管理靈活性：VLAN 使得網絡管理更加靈活，可以根據實際需要快速調整網絡結構，而無需物理上重新佈線。</li>
-<li>節省成本：通過劃分 VLAN，可以在同一套物理設備上運行多個邏輯網絡，節省了硬體設備的投入。<br>
-<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/2e13d2c5-b10e-40a5-a9e1-f91754154e62"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/2e13d2c5-b10e-40a5-a9e1-f91754154e62" alt="image" style="max-width: 100%;"></a></li>
+<li>節省成本：通過劃分 VLAN，可以在同一套物理設備上運行多個邏輯網絡，節省了硬體設備的投入。</li>
 </ol>
+<p>以下面這張圖為例，如果要搭建這樣的隔離網路，我們需要一台路由、兩台交換機，然而如果使用VLAN交換機，我們可以直接在交換機上搭建出這樣的結構，同時可以快速的調整網路結構。<br>
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/2e13d2c5-b10e-40a5-a9e1-f91754154e62"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/2e13d2c5-b10e-40a5-a9e1-f91754154e62" alt="image" style="max-width: 100%;"></a></p>
 <h1>VLAN大致上分為...</h1>
 <ul>
 <li>
@@ -172,7 +173,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 2. 數據存儲：設置家庭NAS，滿足家庭成員的數據存儲需求。
 3. 伺服器架設：設置簡單伺服器，用於家庭和公司應用。
 4. 安全的遠程訪問：設置VPN，確保遠程訪問的安全性，避免使用不安全的Port Forwarding。
-5. 網絡隔離：通過VLAN劃分不同的網絡區域，提升安全性和管理靈活性。
+6. 網絡隔離：通過VLAN劃分不同的網絡區域，提升安全性和管理靈活性。
 </code></pre>
 <h2>VLAN拓樸結構圖/實際VLAN部署接線圖</h2>
 <p>我們要實現是下面這種拓樸結構，透過802.1Q協定讓交換機幫我們在幫我們實現。<br>
