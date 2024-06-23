@@ -2,7 +2,7 @@
 1. 設定好pfSense的網絡設置，並確定可以網路連線
   - 確保你的pfSense已安裝並基本配置完畢，包括WAN和LAN接口的設置。確認WAN接口可以正常連接到互聯網，並且LAN接口可以與內網設備正常通信。
 2. 確定ISP提供的是公網IP而不是ISP大內網
-  - 檢查你的WAN接口是否獲得了公網IP地址。可以通過pfSense的狀態頁面（Status > Interfaces）查看WAN接口的IP地址，並使用在線工具（如WhatIsMyIP）驗證該IP是否為公網IP。
+  - 檢查你的WAN接口是否獲得了公網IP地址。可以通過pfSense的狀態頁面（Status > Interfaces）查看WAN接口的IP地址，並使用線上工具（如WhatIsMyIP）驗證該IP是否為公網IP。
   - 如果你的IP地址屬於私有IP地址範圍（例如10.x.x.x、172.16.x.x-172.31.x.x、192.168.x.x），則可能是ISP提供的是NAT網絡，需要與ISP聯繫以獲取公網IP。
 # VPN設定
 ## IPsec 設定
