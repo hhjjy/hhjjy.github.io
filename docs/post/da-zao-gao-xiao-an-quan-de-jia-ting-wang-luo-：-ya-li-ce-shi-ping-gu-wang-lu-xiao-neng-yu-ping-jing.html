@@ -135,21 +135,25 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#!</span>/bin/bash</span>
 <span class="pl-c"><span class="pl-c">#</span> 壓力測試腳本</span>
 
+<span class="pl-c"><span class="pl-c">#</span> 設定服務器IP</span>
+SERVER_IP=<span class="pl-s"><span class="pl-pds">"</span>192.168.20.100<span class="pl-pds">"</span></span>
+
 <span class="pl-c"><span class="pl-c">#</span> UDP 小包轉發測試</span>
 <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始UDP小包轉發測試 (64字節)<span class="pl-pds">"</span></span>
-iperf3 -c 192.168.20.100 -u -b 100M -l 64
+iperf3 -c <span class="pl-smi">$SERVER_IP</span> -u -b 100M -l 64
 
 <span class="pl-c"><span class="pl-c">#</span> UDP 大包轉發測試</span>
 <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始UDP大包轉發測試 (1500字節)<span class="pl-pds">"</span></span>
-iperf3 -c 192.168.20.100 -u -b 100M -l 1500
+iperf3 -c <span class="pl-smi">$SERVER_IP</span> -u -b 100M -l 1500
 
 <span class="pl-c"><span class="pl-c">#</span> TCP 小包轉發測試</span>
 <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始TCP小包轉發測試 (64字節)<span class="pl-pds">"</span></span>
-iperf3 -c 192.168.20.100 -l 64
+iperf3 -c <span class="pl-smi">$SERVER_IP</span> -l 64
 
 <span class="pl-c"><span class="pl-c">#</span> TCP 大包轉發測試</span>
 <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始TCP大包轉發測試 (1500字節)<span class="pl-pds">"</span></span>
-iperf3 -c 192.168.20.100 -l 1500</pre></div>
+iperf3 -c <span class="pl-smi">$SERVER_IP</span> -l 1500
+</pre></div>
 <h2>測試結果</h2>
 <h3>ISP LAN 對虛擬家庭網路測試結果</h3>
 <table role="table">
@@ -198,6 +202,8 @@ iperf3 -c 192.168.20.100 -l 1500</pre></div>
 </tr>
 </tbody>
 </table>
+<p>具體發送流程如下:<br>
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/b5084426-807b-4a0f-9885-d90c31386342"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/b5084426-807b-4a0f-9885-d90c31386342" alt="image" style="max-width: 100%;"></a></p>
 <h3>虛擬家庭網路間的傳輸測試結果</h3>
 <table role="table">
 <thead>
@@ -245,6 +251,8 @@ iperf3 -c 192.168.20.100 -l 1500</pre></div>
 </tr>
 </tbody>
 </table>
+<p>具體發送流程如下:<br>
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/b355648d-4f43-4779-abeb-6fa0a7a0960d"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/b355648d-4f43-4779-abeb-6fa0a7a0960d" alt="image" style="max-width: 100%;"></a></p>
 <h3>虛擬家庭網路與虛擬伺服器網路傳輸測試結果（透過軟路由）</h3>
 <table role="table">
 <thead>
@@ -292,8 +300,25 @@ iperf3 -c 192.168.20.100 -l 1500</pre></div>
 </tr>
 </tbody>
 </table>
-<h2>結論</h2>
-<p>通過本次測試，我們可以清楚地看到該網絡架構在不同情況下的性能表現。結果表明，雖然該方案在高流量情況下會出現一定的性能瓶頸，但在大多數家庭和中小型辦公室的日常使用中仍然能夠提供穩定且高效的網絡服務。未來，可以根據測試結果進一步優化配置，提升整體網絡效能。</p>
+<p>具體發送流程如下:<br>
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/c0110e8e-bb7c-44de-8c25-216c8e18041f"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/c0110e8e-bb7c-44de-8c25-216c8e18041f" alt="image" style="max-width: 100%;"></a></p>
+<h2>結果分析</h2>
+<h4>單一主介面re0的負載</h4>
+<ul>
+<li>主介面re0需要同時處理來自ISP LAN、虛擬家庭網路和虛擬伺服器網路的流量，這會增加其負載。</li>
+<li>由於所有虛擬介面（re0.10、re0.20、re0.30）的數據都必須通過主介面re0進行處理，這樣會導致主介面的帶寬負載增加，可能會造成瓶頸。</li>
+<li>在全雙工模式下，理論上re0可以同時處理1000Mbps的接收和1000Mbps的發送，但當多個高流量虛擬介面同時工作時，總負載可能會超過主介面re0的處理能力。</li>
+</ul>
+<h4>流量競爭</h4>
+<ul>
+<li>當來自不同來源（如ISP和內部網絡）的流量同時進入和退出主介面re0時，可能會出現競爭，導致性能下降。</li>
+<li>特別是在高流量場景下，如大文件傳輸或多個並發流的情況下，re0可能無法同時高效處理所有流量，導致延遲增加和吞吐量下降。</li>
+</ul>
+<h4>回環問題</h4>
+<ul>
+<li>在虛擬家庭網路和虛擬伺服器網路之間的流量需要多次進出主介面re0，增加了數據包的處理時間和路由負擔。</li>
+<li>每次數據包從虛擬介面到主介面再回到虛擬介面，這種回環會增加延遲，特別是在多次重複這個過程時。</li>
+</ul>
 <hr>
 <p>希望這篇文章能幫助你更好地理解和評估家庭網絡與伺服器網絡的效能。如果你有任何問題或建議，歡迎在下方留言分享你的想法！</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
