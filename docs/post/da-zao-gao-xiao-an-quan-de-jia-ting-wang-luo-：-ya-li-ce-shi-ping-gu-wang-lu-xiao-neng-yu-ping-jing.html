@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light" lang="zh-CN">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.net/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://raw.githubusercontent.com/hhjjy/hhjjy.github.io/master/DJI_20240116_112316_459.JPG"><script>
+        let theme = localStorage.getItem("meek_theme") || "light";
+        document.documentElement.setAttribute("data-color-mode", theme);
+    </script>
+<meta name="description" content="# 打造高效安全的家庭網絡：壓力測試評估網路效能與瓶頸
+
+## 引言
+
+在上一篇文章《打造高效安全的家庭網絡：從零開始學習單臂軟路由配置》中，我們介紹了如何搭建家庭網絡和伺服器網絡，通過單臂路由和虛擬網路實現網絡隔離。">
+<meta property="og:title" content="打造高效安全的家庭網絡：壓力測試評估網路效能與瓶頸">
+<meta property="og:description" content="# 打造高效安全的家庭網絡：壓力測試評估網路效能與瓶頸
+
+## 引言
+
+在上一篇文章《打造高效安全的家庭網絡：從零開始學習單臂軟路由配置》中，我們介紹了如何搭建家庭網絡和伺服器網絡，通過單臂路由和虛擬網路實現網絡隔離。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hhjjy.github.io/post/da-zao-gao-xiao-an-quan-de-jia-ting-wang-luo-%EF%BC%9A-ya-li-ce-shi-ping-gu-wang-lu-xiao-neng-yu-ping-jing.html">
+<meta property="og:image" content="https://raw.githubusercontent.com/hhjjy/hhjjy.github.io/master/DJI_20240116_112316_459.JPG">
+<title>打造高效安全的家庭網絡：壓力測試評估網路效能與瓶頸</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<h1 class="postTitle">打造高效安全的家庭網絡：壓力測試評估網路效能與瓶頸</h1>
+<div class="title-right">
+    <a href="https://hhjjy.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+    <a href="https://github.com/hhjjy/hhjjy.github.io/issues/6" target="_blank" class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+    
+
+    <a class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </a>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody"><h1>打造高效安全的家庭網絡：壓力測試評估網路效能與瓶頸</h1>
+<h2>引言</h2>
+<p>在上一篇文章《打造高效安全的家庭網絡：從零開始學習單臂軟路由配置》中，我們介紹了如何搭建家庭網絡和伺服器網絡，通過單臂路由和虛擬網路實現網絡隔離。本文將進一步探討該網絡架構的效能，通過壓力測試來評估其性能與潛在瓶頸。</p>
+<h2>網路架構回顧</h2>
+<p>在進行網絡效能測試之前，讓我們簡單回顧一下當前的網絡架構：<br>
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/dd35ba1d-5bab-4cb7-8009-34f7ab4dfd79"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/dd35ba1d-5bab-4cb7-8009-34f7ab4dfd79" alt="image" style="max-width: 100%;"></a></p>
+<ul>
+<li>192.168.0.x (ISP LAN)
+<ul>
+<li>192.168.0.1 (ISP 路由器)</li>
+<li>192.168.0.79 (軟路由)
+<ul>
+<li>192.168.20.1 (家庭網絡)</li>
+<li>192.168.30.1 (伺服器網絡)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>設備和配置</h3>
+<ol>
+<li>ISP 路由器（192.168.0.1）：提供與外部網絡的連接。</li>
+<li>軟路由（192.168.0.79）：使用單臂路由技術進行內部分網。
+<ul>
+<li>家庭網絡（192.168.20.1）：家庭內部設備的網絡。</li>
+<li>伺服器網絡（192.168.30.1）：伺服器和關鍵設備的網絡。</li>
+</ul>
+</li>
+</ol>
+<h3>優點和缺點</h3>
+<h4>優點</h4>
+<ul>
+<li>成本低：不需要額外的硬件，只需配置現有的網絡設備。</li>
+<li>靈活性高：可以在任何只有單網口的機器上實現。</li>
+<li>可管控性強：通過軟路由和交換機可以細緻控制虛擬網絡的訪問權限和流量。</li>
+</ul>
+<h4>缺點</h4>
+<ul>
+<li>性能瓶頸：由於是單網口實現多個區域網絡，一旦虛擬區域網絡設備的流量變大，網絡速度可能會下降。</li>
+</ul>
+<h2>測試目標</h2>
+<p>本次測試的主要目標是評估以下三個方面的網絡效能：</p>
+<ol>
+<li>家庭網絡與ISP LAN的傳輸速度 (192.168.0.100 -&gt; 192.168.20.100)</li>
+<li>家庭網絡與伺服器網絡的傳輸速度 (192.168.30.101 -&gt; 192.168.20.100)</li>
+<li>虛擬區域網路內互相的傳輸速度 (192.168.20.101 -&gt; 192.168.20.100)</li>
+</ol>
+<h2>測試方法</h2>
+<p>測試將使用iperf3工具進行，樹莓派掛在家庭網絡下的192.168.20.100，並在此設備上運行iperf3 -s來作為服務器。測試的電腦(客戶端)分別在ISP LAN、伺服器網絡、家庭網絡下進行測試。以下是具體的測試步驟和命令：</p>
+<h3>伺服器端</h3>
+<p>伺服器端處於被動模式，它會等待客戶端的連接請求並響應測試數據。伺服器本身不主動發起數據傳輸，而是響應從客戶端來的請求。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">iperf3 -s </pre></div>
+<h3>客戶端</h3>
+<p>客戶端是通過運行iperf3 -c &lt;server_ip&gt;命令來啟動的，-c代表客戶端模式。需要指定伺服器的IP地址以連接到伺服器端。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#!</span>/bin/bash</span>
+<span class="pl-c"><span class="pl-c">#</span> 壓力測試腳本</span>
+
+<span class="pl-c"><span class="pl-c">#</span> UDP 小包轉發測試</span>
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始UDP小包轉發測試 (64字節)<span class="pl-pds">"</span></span>
+iperf3 -c 192.168.20.100 -u -b 100M -l 64
+
+<span class="pl-c"><span class="pl-c">#</span> UDP 大包轉發測試</span>
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始UDP大包轉發測試 (1500字節)<span class="pl-pds">"</span></span>
+iperf3 -c 192.168.20.100 -u -b 100M -l 1500
+
+<span class="pl-c"><span class="pl-c">#</span> TCP 小包轉發測試</span>
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始TCP小包轉發測試 (64字節)<span class="pl-pds">"</span></span>
+iperf3 -c 192.168.20.100 -l 64
+
+<span class="pl-c"><span class="pl-c">#</span> TCP 大包轉發測試</span>
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>開始TCP大包轉發測試 (1500字節)<span class="pl-pds">"</span></span>
+iperf3 -c 192.168.20.100 -l 1500</pre></div>
+<h2>測試結果</h2>
+<h3>ISP LAN 對虛擬家庭網路測試結果</h3>
+<table role="table">
+<thead>
+<tr>
+<th>Test Type</th>
+<th>Packet Size</th>
+<th>Protocol</th>
+<th>Transfer</th>
+<th>Bitrate</th>
+<th>Bandwidth Set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP小包轉發</td>
+<td>64 bytes</td>
+<td>TCP</td>
+<td>43.4 MBytes</td>
+<td>36.4 Mbits/sec</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>UDP小包轉發</td>
+<td>64 bytes</td>
+<td>UDP</td>
+<td>11.9 MBytes</td>
+<td>9.99 Mbits/sec</td>
+<td>10M</td>
+</tr>
+<tr>
+<td>TCP大包轉發</td>
+<td>1400 bytes</td>
+<td>TCP</td>
+<td>571 MBytes</td>
+<td>478 Mbits/sec</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>UDP大包轉發</td>
+<td>1400 bytes</td>
+<td>UDP</td>
+<td>627 MBytes</td>
+<td>526 Mbits/sec</td>
+<td>1000M</td>
+</tr>
+</tbody>
+</table>
+<h3>虛擬家庭網路間的傳輸測試結果</h3>
+<table role="table">
+<thead>
+<tr>
+<th>Test Type</th>
+<th>Packet Size</th>
+<th>Protocol</th>
+<th>Transfer</th>
+<th>Bitrate</th>
+<th>Bandwidth Set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP小包轉發</td>
+<td>64 bytes</td>
+<td>TCP</td>
+<td>43.3 MBytes</td>
+<td>36.3 Mbits/sec</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>UDP小包轉發</td>
+<td>64 bytes</td>
+<td>UDP</td>
+<td>11.9 MBytes</td>
+<td>10.0 Mbits/sec</td>
+<td>10M</td>
+</tr>
+<tr>
+<td>TCP大包轉發</td>
+<td>1400 bytes</td>
+<td>TCP</td>
+<td>413 MBytes</td>
+<td>347 Mbits/sec</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>UDP大包轉發</td>
+<td>1400 bytes</td>
+<td>UDP</td>
+<td>1005 MBytes</td>
+<td>843 Mbits/sec</td>
+<td>1000M</td>
+</tr>
+</tbody>
+</table>
+<h3>虛擬家庭網路與虛擬伺服器網路傳輸測試結果（透過軟路由）</h3>
+<table role="table">
+<thead>
+<tr>
+<th>Test Type</th>
+<th>Packet Size</th>
+<th>Protocol</th>
+<th>Transfer</th>
+<th>Bitrate</th>
+<th>Bandwidth Set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP小包轉發</td>
+<td>64 bytes</td>
+<td>TCP</td>
+<td>41.8 MBytes</td>
+<td>35.1 Mbits/sec</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>UDP小包轉發</td>
+<td>64 bytes</td>
+<td>UDP</td>
+<td>11.9 MBytes</td>
+<td>10.0 Mbits/sec</td>
+<td>10M</td>
+</tr>
+<tr>
+<td>TCP大包轉發</td>
+<td>1400 bytes</td>
+<td>TCP</td>
+<td>590 MBytes</td>
+<td>495 Mbits/sec</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>UDP大包轉發</td>
+<td>1400 bytes</td>
+<td>UDP</td>
+<td>980 MBytes</td>
+<td>822 Mbits/sec</td>
+<td>1000M</td>
+</tr>
+</tbody>
+</table>
+<h2>結論</h2>
+<p>通過本次測試，我們可以清楚地看到該網絡架構在不同情況下的性能表現。結果表明，雖然該方案在高流量情況下會出現一定的性能瓶頸，但在大多數家庭和中小型辦公室的日常使用中仍然能夠提供穩定且高效的網絡服務。未來，可以根據測試結果進一步優化配置，提升整體網絡效能。</p>
+<hr>
+<p>希望這篇文章能幫助你更好地理解和評估家庭網絡與伺服器網絡的效能。如果你有任何問題或建議，歡迎在下方留言分享你的想法！</p></div>
+<div style="font-size:small;margin-top:8px;float:right;"></div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https://hhjjy.github.io"> ChunChun 的技術探索 </a>
+<p>
+<span id="runday"></span>Powered by <a href="https://meekdai.com/Gmeek.html" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if(""!=""){
+    var now=new Date();
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if(""!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var utterancesLoad=0;
+
+let themeSettings={
+    "dark": ["dark","moon","#00f0ff","dark-blue"],
+    "light": ["light","sun","#ff5000","github-light"],
+    "auto": ["auto","sync","","preferred-color-scheme"]
+};
+function changeTheme(mode, icon, color, utheme){
+    document.documentElement.setAttribute("data-color-mode",mode);
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList[icon]);
+    document.getElementById("themeSwitch").parentNode.style.color=color;
+    if(utterancesLoad==1){utterancesTheme(utheme);}
+}
+function modeSwitch(){
+    let currentMode=document.documentElement.getAttribute('data-color-mode');
+    let newMode = currentMode === "light" ? "dark" : currentMode === "dark" ? "auto" : "light";
+    localStorage.setItem("meek_theme", newMode);
+    if(themeSettings[newMode]){
+        changeTheme(...themeSettings[newMode]);
+    }
+}
+function utterancesTheme(theme){
+    const message={type:'set-theme',theme: theme};
+    const iframe=document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message,'https://utteranc.es');
+}
+if(themeSettings[theme]){changeTheme(...themeSettings[theme]);}
+console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n\n","padding:5px 0;background:#02d81d;color:#fff");
+</script>
+
+<script>
+document.getElementById("pathHome").setAttribute("d",IconList["home"]);
+document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","hhjjy/hhjjy.github.io");
+    script.setAttribute("issue-term","title");
+    
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else if(localStorage.getItem("meek_theme")=="light") {script.setAttribute("theme","github-light");}
+    else{script.setAttribute("theme","preferred-color-scheme");}
+    
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+</script>
+
+
+</html>
