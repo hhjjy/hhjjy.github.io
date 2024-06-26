@@ -320,7 +320,9 @@ iperf3 -c <span class="pl-smi">$SERVER_IP</span> -l 1500
 <li>每次數據包從虛擬介面到主介面再回到虛擬介面，這種回環會增加延遲，特別是在多次重複這個過程時。</li>
 </ul>
 <hr>
-<p>希望這篇文章能幫助你更好地理解和評估家庭網絡與伺服器網絡的效能。如果你有任何問題或建議，歡迎在下方留言分享你的想法！</p></div>
+<h2>結論</h2>
+<p>目前網絡架構中單一主介面re0承擔了來自多個虛擬介面和ISP的高負載，這是主要的瓶頸。如果能夠增加實體網口，將能有效分散流量，減少競爭，提升整體網絡性能。<br>
+希望這篇文章能幫助你更好地理解和評估家庭網絡與伺服器網絡的效能。如果你有任何問題或建議，歡迎在下方留言分享你的想法！</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
