@@ -4,7 +4,7 @@
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="//cdn.staticfile.net/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link href='https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Primer/21.0.7/primer.css' rel='stylesheet' />
     <link rel="icon" href="https://raw.githubusercontent.com/hhjjy/hhjjy.github.io/master/DJI_20240116_112316_459.JPG"><script>
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
@@ -324,8 +324,10 @@ iperf3 -c <span class="pl-smi">$SERVER_IP</span> -l 1500
 <p>目前網絡架構中單一主介面re0承擔了來自多個虛擬介面和ISP的高負載，這是主要的瓶頸。如果能夠增加實體網口，將能有效分散流量，減少競爭，提升整體網絡性能。<br>
 希望這篇文章能幫助你更好地理解和評估家庭網絡與伺服器網絡的效能。如果你有任何問題或建議，歡迎在下方留言分享你的想法！</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
+
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
+
 </div>
     <div id="footer">Copyright © <span id="year"></span><a href="https://hhjjy.github.io"> ChunChun 的技術探索 </a>
 <p>
@@ -380,6 +382,8 @@ console.log("\n %c Gmeek last https://github.com/Meekdai/Gmeek \n\n","padding:5p
 <script>
 document.getElementById("pathHome").setAttribute("d",IconList["home"]);
 document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
+
+
 
 function openComments(){
     cm=document.getElementById("comments");
