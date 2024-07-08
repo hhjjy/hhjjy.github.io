@@ -5,12 +5,12 @@
 
 #### 步驟一：新增 Serial Port
 1. **關閉 VM**。
-2. 在 PVE Host 中執行以下命令或是直接到虛擬機的硬體新增SerialPort 
+2. 在 PVE Host 中執行以下命令:
    ```bash
    qm set 100 -serial0 socket
    ```
-   （假設 VM ID 是 116）
-![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/b596e805-8d8f-4440-aa37-b848d83412bb)
+   （假設 VM ID 是 100）
+![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/31e8de1a-c631-4f03-99b9-595b2b04daa9)
 
 3. **重開 VM**，並用 `dmesg | grep ttyS` 確認 serial port 是否偵測到。
 ![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/2bd3313c-0d5d-4d8a-ac2c-72f677daec44)

@@ -85,10 +85,10 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p><strong>關閉 VM</strong>。</p>
 </li>
 <li>
-<p>在 PVE Host 中執行以下命令或是直接到虛擬機的硬體新增SerialPort</p>
+<p>在 PVE Host 中執行以下命令:</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate">qm <span class="pl-c1">set</span> 100 -serial0 socket</pre></div>
-<p>（假設 VM ID 是 116）<br>
-<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/b596e805-8d8f-4440-aa37-b848d83412bb"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/b596e805-8d8f-4440-aa37-b848d83412bb" alt="image" style="max-width: 100%;"></a></p>
+<p>（假設 VM ID 是 100）<br>
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/31e8de1a-c631-4f03-99b9-595b2b04daa9"><img src="https://github.com/hhjjy/hhjjy.github.io/assets/45664168/31e8de1a-c631-4f03-99b9-595b2b04daa9" alt="image" style="max-width: 100%;"></a></p>
 </li>
 <li>
 <p><strong>重開 VM</strong>，並用 <code class="notranslate">dmesg | grep ttyS</code> 確認 serial port 是否偵測到。<br>
