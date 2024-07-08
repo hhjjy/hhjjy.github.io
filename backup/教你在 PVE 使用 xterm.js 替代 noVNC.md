@@ -35,6 +35,7 @@
 #### 步驟三：測試 xterm.js
 1. 在 PVE UI 中測試 xterm.js。
 2. 若畫面停滯，按下 Enter 確認連接成功。
+![image](https://github.com/hhjjy/hhjjy.github.io/assets/45664168/afd350ed-7245-4b90-ae23-ae1f1e99a04c)
 
 #### 為何要修改 GRUB
 GRUB 配置文件 `/etc/default/grub` 是用來設定 GNU GRUB 引導加載器的默認行為。透過修改此文件，可以指定內核啟動參數，使得系統在啟動時將輸出發送到特定的 ttyS0（串行端口）。這樣可以允許通過串行控制台訪問虛擬機，並在 Proxmox VE 中使用 xterm.js 操作虛擬機的命令行界面，無需依賴 SSH 連接。
